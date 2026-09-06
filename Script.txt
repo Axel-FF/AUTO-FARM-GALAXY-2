@@ -1,0 +1,342 @@
+-- ==============================================
+-- AUTO FARM • Ruta completa (última coordenada -2)
+-- RGB • Farm • Noclip • Velocidad 0-100
+-- ==============================================
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local CoreGui = game:GetService("CoreGui")
+
+local LP = Players.LocalPlayer
+
+local parent
+pcall(function() parent = gethui() end)
+if not parent then parent = CoreGui end
+
+pcall(function()
+	for _, v in pairs(parent:GetChildren()) do
+		if v.Name == "AutoFarmPanel" then v:Destroy() end
+	end
+end)
+
+local Path = {
+	Vector3.new(-218.93, 362.54, -787.89),
+	Vector3.new(74.45, 362.54, -774.69),
+	Vector3.new(206.22, 362.27, -779.89),
+	Vector3.new(294.41, 362.34, -779.52),
+	Vector3.new(425.06, 362.55, -768.18),
+	Vector3.new(788.99, 362.55, -774.99),
+	Vector3.new(929.14, 362.55, -763.01),
+	Vector3.new(1138.28, 362.55, -760.14),
+	Vector3.new(1546.32, 363.14, -769.74),
+	Vector3.new(2035.56, 362.19, -764.94),
+	Vector3.new(2453.89, 362.94, -772.44),
+	Vector3.new(2613.34, 362.97, -760.82),
+	Vector3.new(2661.59, 436.88, -759.38),
+	Vector3.new(2661.59, 534.54, -760.08),
+	Vector3.new(2661.61, 690.80, -762.05),
+	Vector3.new(2664.86, 807.38, -761.30),
+	Vector3.new(2742.91, 838.99, -761.37),
+	Vector3.new(2830.74, 838.99, -766.21),
+	Vector3.new(2929.38, 856.44, -776.34),
+	Vector3.new(3107.68, 856.44, -776.07),
+	Vector3.new(3266.87, 797.76, -796.46),
+	Vector3.new(3359.91, 812.44, -776.77),
+	Vector3.new(3546.55, 812.44, -776.06),
+	Vector3.new(3721.45, 730.99, -758.21),
+	Vector3.new(3850.72, 730.99, -757.85),
+	Vector3.new(3874.97, 770.85, -758.69),
+	Vector3.new(4108.87, 770.87, -759.06),
+	Vector3.new(4399.95, 769.62, -751.00),
+	Vector3.new(4413.58, 730.27, -759.39),
+	Vector3.new(4508.16, 730.28, -757.73),
+	Vector3.new(4512.26, 729.89, -737.48), -- final bajado 2
+}
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "AutoFarmPanel"
+gui.ResetOnSpawn = false
+gui.DisplayOrder = 999999
+gui.IgnoreGuiInset = true
+gui.Parent = parent
+
+local Main = Instance.new("Frame")
+Main.Size = UDim2.new(0, 260, 0, 290)
+Main.Position = UDim2.new(0, 14, 0.32, 0)
+Main.BackgroundColor3 = Color3.fromRGB(12, 12, 18)
+Main.BorderSizePixel = 0
+Main.Active = true
+Main.Draggable = true
+Main.Parent = gui
+Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 14)
+
+local Stroke = Instance.new("UIStroke")
+Stroke.Thickness = 1.5
+Stroke.Transparency = 0.2
+Stroke.Parent = Main
+
+local Top = Instance.new("Frame")
+Top.Size = UDim2.new(1, 0, 0, 42)
+Top.BackgroundColor3 = Color3.fromRGB(18, 18, 26)
+Top.BorderSizePixel = 0
+Top.Parent = Main
+Instance.new("UICorner", Top).CornerRadius = UDim.new(0, 14)
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, -80, 1, 0)
+Title.Position = UDim2.new(0, 14, 0, 0)
+Title.BackgroundTransparency = 1
+Title.Text = "AUTO FARM"
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 15
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = Top
+
+local MinBtn = Instance.new("TextButton")
+MinBtn.Size = UDim2.new(0, 30, 0, 30)
+MinBtn.Position = UDim2.new(1, -72, 0, 6)
+MinBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+MinBtn.Text = "-"
+MinBtn.TextColor3 = Color3.new(1,1,1)
+MinBtn.Font = Enum.Font.GothamBold
+MinBtn.TextSize = 18
+MinBtn.Parent = Top
+Instance.new("UICorner", MinBtn).CornerRadius = UDim.new(0, 8)
+
+local Close = Instance.new("TextButton")
+Close.Size = UDim2.new(0, 30, 0, 30)
+Close.Position = UDim2.new(1, -36, 0, 6)
+Close.BackgroundColor3 = Color3.fromRGB(160, 45, 45)
+Close.Text = "X"
+Close.TextColor3 = Color3.new(1,1,1)
+Close.Font = Enum.Font.GothamBold
+Close.TextSize = 14
+Close.Parent = Top
+Instance.new("UICorner", Close).CornerRadius = UDim.new(0, 8)
+
+local Body = Instance.new("Frame")
+Body.Size = UDim2.new(1, -20, 1, -55)
+Body.Position = UDim2.new(0, 10, 0, 50)
+Body.BackgroundTransparency = 1
+Body.Parent = Main
+
+local Status = Instance.new("TextLabel")
+Status.Size = UDim2.new(1, 0, 0, 18)
+Status.BackgroundTransparency = 1
+Status.Text = "Estado: OFF"
+Status.Font = Enum.Font.GothamBold
+Status.TextSize = 13
+Status.TextXAlignment = Enum.TextXAlignment.Left
+Status.Parent = Body
+
+local PointLbl = Instance.new("TextLabel")
+PointLbl.Size = UDim2.new(1, 0, 0, 16)
+PointLbl.Position = UDim2.new(0, 0, 0, 20)
+PointLbl.BackgroundTransparency = 1
+PointLbl.Text = "Punto: 0 / " .. #Path
+PointLbl.Font = Enum.Font.Gotham
+PointLbl.TextSize = 12
+PointLbl.TextXAlignment = Enum.TextXAlignment.Left
+PointLbl.Parent = Body
+
+local FarmBtn = Instance.new("TextButton")
+FarmBtn.Size = UDim2.new(1, 0, 0, 40)
+FarmBtn.Position = UDim2.new(0, 0, 0, 44)
+FarmBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+FarmBtn.Text = "FARM   OFF"
+FarmBtn.Font = Enum.Font.GothamBold
+FarmBtn.TextSize = 14
+FarmBtn.Parent = Body
+Instance.new("UICorner", FarmBtn).CornerRadius = UDim.new(0, 10)
+
+local NoclipBtn = Instance.new("TextButton")
+NoclipBtn.Size = UDim2.new(1, 0, 0, 40)
+NoclipBtn.Position = UDim2.new(0, 0, 0, 90)
+NoclipBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+NoclipBtn.Text = "NOCLIP   OFF"
+NoclipBtn.Font = Enum.Font.GothamBold
+NoclipBtn.TextSize = 14
+NoclipBtn.Parent = Body
+Instance.new("UICorner", NoclipBtn).CornerRadius = UDim.new(0, 10)
+
+local SpeedTitle = Instance.new("TextLabel")
+SpeedTitle.Size = UDim2.new(1, 0, 0, 16)
+SpeedTitle.Position = UDim2.new(0, 0, 0, 140)
+SpeedTitle.BackgroundTransparency = 1
+SpeedTitle.Text = "Velocidad del Farm"
+SpeedTitle.Font = Enum.Font.Gotham
+SpeedTitle.TextSize = 12
+SpeedTitle.TextXAlignment = Enum.TextXAlignment.Left
+SpeedTitle.Parent = Body
+
+local SpeedBarBG = Instance.new("Frame")
+SpeedBarBG.Size = UDim2.new(1, 0, 0, 10)
+SpeedBarBG.Position = UDim2.new(0, 0, 0, 162)
+SpeedBarBG.BackgroundColor3 = Color3.fromRGB(30, 30, 42)
+SpeedBarBG.BorderSizePixel = 0
+SpeedBarBG.Parent = Body
+Instance.new("UICorner", SpeedBarBG).CornerRadius = UDim.new(0, 5)
+
+local SpeedBar = Instance.new("Frame")
+SpeedBar.Size = UDim2.new(0.5, 0, 1, 0)
+SpeedBar.BackgroundColor3 = Color3.fromRGB(80, 200, 120)
+SpeedBar.BorderSizePixel = 0
+SpeedBar.Parent = SpeedBarBG
+Instance.new("UICorner", SpeedBar).CornerRadius = UDim.new(0, 5)
+
+local SpeedRow = Instance.new("Frame")
+SpeedRow.Size = UDim2.new(1, 0, 0, 34)
+SpeedRow.Position = UDim2.new(0, 0, 0, 180)
+SpeedRow.BackgroundTransparency = 1
+SpeedRow.Parent = Body
+
+local SpeedDn = Instance.new("TextButton")
+SpeedDn.Size = UDim2.new(0, 44, 0, 34)
+SpeedDn.BackgroundColor3 = Color3.fromRGB(45, 45, 60)
+SpeedDn.Text = "−"
+SpeedDn.TextColor3 = Color3.new(1,1,1)
+SpeedDn.Font = Enum.Font.GothamBold
+SpeedDn.TextSize = 20
+SpeedDn.Parent = SpeedRow
+Instance.new("UICorner", SpeedDn).CornerRadius = UDim.new(0, 8)
+
+local SpeedBox = Instance.new("TextLabel")
+SpeedBox.Size = UDim2.new(0, 70, 0, 34)
+SpeedBox.Position = UDim2.new(0.5, -35, 0, 0)
+SpeedBox.BackgroundColor3 = Color3.fromRGB(28, 28, 40)
+SpeedBox.Text = "50"
+SpeedBox.Font = Enum.Font.GothamBold
+SpeedBox.TextSize = 16
+SpeedBox.Parent = SpeedRow
+Instance.new("UICorner", SpeedBox).CornerRadius = UDim.new(0, 8)
+
+local SpeedUp = Instance.new("TextButton")
+SpeedUp.Size = UDim2.new(0, 44, 0, 34)
+SpeedUp.Position = UDim2.new(1, -44, 0, 0)
+SpeedUp.BackgroundColor3 = Color3.fromRGB(45, 45, 60)
+SpeedUp.Text = "+"
+SpeedUp.TextColor3 = Color3.new(1,1,1)
+SpeedUp.Font = Enum.Font.GothamBold
+SpeedUp.TextSize = 20
+SpeedUp.Parent = SpeedRow
+Instance.new("UICorner", SpeedUp).CornerRadius = UDim.new(0, 8)
+
+local rgbLabels = {Title, Status, PointLbl, FarmBtn, NoclipBtn, SpeedTitle, SpeedBox}
+local hue = 0
+RunService.RenderStepped:Connect(function()
+	hue = (hue + 0.55) % 360
+	local c = Color3.fromHSV(hue / 360, 0.9, 1)
+	for _, l in pairs(rgbLabels) do
+		l.TextColor3 = c
+	end
+	Stroke.Color = c
+	SpeedBar.BackgroundColor3 = c
+end)
+
+local farming = false
+local noclip = false
+local minimized = false
+local FarmSpeed = 50
+
+local function UpdateSpeedUI()
+	SpeedBox.Text = tostring(FarmSpeed)
+	SpeedBar.Size = UDim2.new(FarmSpeed / 100, 0, 1, 0)
+end
+
+local function GetRoot()
+	local char = LP.Character
+	if not char then return nil end
+	return char:FindFirstChild("HumanoidRootPart")
+end
+
+local function ApplyNoclip()
+	local char = LP.Character
+	if not char then return end
+	for _, p in pairs(char:GetDescendants()) do
+		if p:IsA("BasePart") then
+			p.CanCollide = not noclip
+		end
+	end
+end
+
+RunService.Stepped:Connect(function()
+	if noclip then ApplyNoclip() end
+end)
+
+local function GoTo(pos)
+	local root = GetRoot()
+	if not root then return end
+	local duration = math.clamp(1.2 - (FarmSpeed / 100) * 1.12, 0.08, 1.2)
+	local goal = CFrame.new(pos + Vector3.new(0, 3, 0))
+	local tw = TweenService:Create(root, TweenInfo.new(duration, Enum.EasingStyle.Linear), {CFrame = goal})
+	tw:Play()
+	tw.Completed:Wait()
+end
+
+local function FarmLoop()
+	while farming do
+		for i, pos in ipairs(Path) do
+			if not farming then break end
+			PointLbl.Text = "Punto: " .. i .. " / " .. #Path
+			Status.Text = "Estado: Farmeando..."
+			GoTo(pos)
+		end
+		if farming then
+			Status.Text = "Estado: Reiniciando..."
+			task.wait(0.25)
+		end
+	end
+	Status.Text = "Estado: OFF"
+	PointLbl.Text = "Punto: 0 / " .. #Path
+end
+
+FarmBtn.MouseButton1Click:Connect(function()
+	farming = not farming
+	FarmBtn.Text = farming and "FARM   ON" or "FARM   OFF"
+	FarmBtn.BackgroundColor3 = farming and Color3.fromRGB(25, 90, 50) or Color3.fromRGB(35, 35, 50)
+	if farming then
+		Status.Text = "Estado: ON"
+		if not noclip then
+			noclip = true
+			NoclipBtn.Text = "NOCLIP   ON"
+			NoclipBtn.BackgroundColor3 = Color3.fromRGB(25, 90, 50)
+		end
+		task.spawn(FarmLoop)
+	else
+		Status.Text = "Estado: OFF"
+	end
+end)
+
+NoclipBtn.MouseButton1Click:Connect(function()
+	noclip = not noclip
+	NoclipBtn.Text = noclip and "NOCLIP   ON" or "NOCLIP   OFF"
+	NoclipBtn.BackgroundColor3 = noclip and Color3.fromRGB(25, 90, 50) or Color3.fromRGB(35, 35, 50)
+	ApplyNoclip()
+end)
+
+SpeedDn.MouseButton1Click:Connect(function()
+	FarmSpeed = math.max(0, FarmSpeed - 5)
+	UpdateSpeedUI()
+end)
+
+SpeedUp.MouseButton1Click:Connect(function()
+	FarmSpeed = math.min(100, FarmSpeed + 5)
+	UpdateSpeedUI()
+end)
+
+MinBtn.MouseButton1Click:Connect(function()
+	minimized = not minimized
+	Main.Size = minimized and UDim2.new(0, 260, 0, 42) or UDim2.new(0, 260, 0, 290)
+	Body.Visible = not minimized
+	MinBtn.Text = minimized and "+" or "-"
+end)
+
+Close.MouseButton1Click:Connect(function()
+	farming = false
+	noclip = false
+	gui:Destroy()
+end)
+
+UpdateSpeedUI()
+print("Auto Farm listo • última coordenada bajada 2")
