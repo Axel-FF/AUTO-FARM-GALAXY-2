@@ -1,5 +1,6 @@
 -- AUTO FARM ACTUALIZADO
 -- Primer punto: -218.929596
+-- Punto torre +10 Y
 -- Espera 5 segundos al terminar la ruta
 -- Credits: @unrandom_tk
 
@@ -38,7 +39,7 @@ local Path = {
 	Vector3.new(2661.58618, 436.878967, -759.379761),
 	Vector3.new(2661.58716, 534.5401, -760.081238),
 	Vector3.new(2661.6062, 690.80249, -762.049866),
-	Vector3.new(2664.85693, 807.37677, -761.301331),
+	Vector3.new(2664.85693, 817.37677, -761.301331), -- ← +10 en Y
 	Vector3.new(2742.91187, 838.985596, -761.368164),
 	Vector3.new(2830.74365, 838.991089, -766.208923),
 	Vector3.new(2929.37793, 856.439026, -776.342896),
