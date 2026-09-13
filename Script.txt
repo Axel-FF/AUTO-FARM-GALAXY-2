@@ -1,8 +1,7 @@
--- ==============================================
--- AUTO FARM • Ruta completa
--- RGB • Farm • Noclip • Velocidad 0-100
--- Credits: TikTok @unrandom_tk
--- ==============================================
+-- AUTO FARM ACTUALIZADO
+-- Primer punto: -218.929596
+-- Espera 5 segundos al terminar la ruta
+-- Credits: @unrandom_tk
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -17,11 +16,14 @@ if not parent then parent = CoreGui end
 
 pcall(function()
 	for _, v in pairs(parent:GetChildren()) do
-		if v.Name == "AutoFarmPanel" then v:Destroy() end
+		if v.Name == "AutoFarmPanel" then
+			v:Destroy()
+		end
 	end
 end)
 
 local Path = {
+	Vector3.new(-218.929596, 362.537872, -787.891663), -- ← Primer punto
 	Vector3.new(74.4528351, 362.539948, -774.692566),
 	Vector3.new(206.220688, 362.267517, -779.887634),
 	Vector3.new(294.405518, 362.339142, -779.515808),
@@ -234,7 +236,6 @@ SpeedUp.TextSize = 20
 SpeedUp.Parent = SpeedRow
 Instance.new("UICorner", SpeedUp).CornerRadius = UDim.new(0, 8)
 
--- Credits TikTok
 local Credits = Instance.new("TextLabel")
 Credits.Size = UDim2.new(1, 0, 0, 16)
 Credits.Position = UDim2.new(0, 0, 0, 220)
@@ -306,8 +307,8 @@ local function FarmLoop()
 			GoTo(pos)
 		end
 		if farming then
-			Status.Text = "Estado: Reiniciando..."
-			task.wait(0.25)
+			Status.Text = "Estado: Esperando 5s..."
+			task.wait(5)
 		end
 	end
 	Status.Text = "Estado: OFF"
@@ -362,4 +363,4 @@ Close.MouseButton1Click:Connect(function()
 end)
 
 UpdateSpeedUI()
-print("Auto Farm listo • Credits: @unrandom_tk")
+print("Auto Farm listo - Credits: @unrandom_tk")
