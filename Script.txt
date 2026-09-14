@@ -1,6 +1,8 @@
 -- AUTO FARM ACTUALIZADO
 -- Primer punto: -218.929596
--- Punto torre +10 Y
+-- Punto torre +20 Y
+-- Punto siguiente +5 Y
+-- Último punto bajado 4
 -- Espera 5 segundos al terminar la ruta
 -- Credits: @unrandom_tk
 
@@ -39,8 +41,8 @@ local Path = {
 	Vector3.new(2661.58618, 436.878967, -759.379761),
 	Vector3.new(2661.58716, 534.5401, -760.081238),
 	Vector3.new(2661.6062, 690.80249, -762.049866),
-	Vector3.new(2664.85693, 817.37677, -761.301331), -- ← +10 en Y
-	Vector3.new(2742.91187, 838.985596, -761.368164),
+	Vector3.new(2664.85693, 827.37677, -761.301331), -- ← +20 en Y
+	Vector3.new(2742.91187, 843.985596, -761.368164), -- +5 en Y
 	Vector3.new(2830.74365, 838.991089, -766.208923),
 	Vector3.new(2929.37793, 856.439026, -776.342896),
 	Vector3.new(3107.68359, 856.439026, -776.069153),
@@ -66,7 +68,7 @@ local Path = {
 	Vector3.new(6568.98926, 746.233154, -778.398743),
 	Vector3.new(6709.25146, 720.307312, -756.851379),
 	Vector3.new(7054.21484, 720.310425, -759.316772),
-	Vector3.new(7054.46582, 721.914368, -735.555054),
+	Vector3.new(7054.46582, 717.914368, -735.555054), -- bajado 4
 }
 
 local gui = Instance.new("ScreenGui")
